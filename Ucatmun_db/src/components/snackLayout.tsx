@@ -52,7 +52,7 @@ export const SnackLayout = () => {
       <UserSnack
         flag={flag}
         content={"John Doe"}
-        snacks={[true, false, false]}/>
+        snacks={[true, false, false]}/> 
     </div>
   );
 }

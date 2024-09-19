@@ -19,6 +19,7 @@ export const Navbar = () => {
                     <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
                     <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
                     <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
+                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
                 </div>
                 <div className='navbar_switch'>
                     <button className={'navbar_switch_button ' + ((!snack) ? ' navbar_switch_button_selected' : " ")} onClick={() => setSnack(false)}>

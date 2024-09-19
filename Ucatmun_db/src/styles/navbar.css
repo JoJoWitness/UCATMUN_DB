@@ -13,8 +13,8 @@
 }
 
 .logo_container{
-  width: 125px;
-  height: 125px;
+  width: 100px;
+  height: 100px;
   background-color: #F4F4F8;
   display: flex;
   border-radius: 50%;
@@ -35,7 +35,7 @@
 
 .navbar_button{
   width: 80%;
-  height: 50px;
+  height: 45px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
