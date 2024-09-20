@@ -1,9 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Ucatmun from '../assets/ucatmun.png'
+import Psi from '../assets/IUPsyS.png'
+import Oit from '../assets/ILO.png'
+import Cop16 from '../assets/cop16.png'
+import Onu from '../assets/Emblem_of_the_United_Nations.svg'
+import caef_omc from '../assets/CAEF-OMC.png'
+import UEFA from '../assets/uefa.png'
 import "../styles/navbar.css"
+import Bilderberg from '../assets/Bilderberg.png'
+import Prensa from '../assets/prensa.png'
+import Protoclo from '../assets/protocolo.svg'
+
 import { useState } from 'react';
 
 export const Navbar = () => {
+    const location = useLocation();
+    const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
 
     const [snack, setSnack] = useState(false)
  
@@ -11,19 +23,19 @@ export const Navbar = () => {
             <nav className="navbar">
                 <img className='logo_container' src={Ucatmun} alt="Logo" />
                 <div className='navbar_container_buttons'>
-                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
-                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
-                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
-                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
-                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
-                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
-                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
-                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
-                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Inicio' comitte_route='/'/>
+                    <NavbarButton comitte_logo={Psi} comitte_name='IUPsyS' comitte_route='IUPsyS' bg={false} active={lastPathSegment === 'IUPsyS'}/>
+                    <NavbarButton comitte_logo={Oit} comitte_name='OIT' comitte_route='OIT' active={lastPathSegment === 'OIT'}  bg={false}/>
+                    <NavbarButton comitte_logo={Cop16} comitte_name='Cop16' comitte_route='Cop16' active={lastPathSegment === 'Cop16'}  bg={false}/>
+                    <NavbarButton comitte_logo={Onu} comitte_name='GEGNU' comitte_route='GEGNU'bg={true} active={lastPathSegment === 'GEGNU'}/>
+                    <NavbarButton comitte_logo={caef_omc} comitte_name='CAEF-OMC' comitte_route='CAEF-OMC'bg={true} active={lastPathSegment === 'CAEF-OMC'}/>
+                    <NavbarButton comitte_logo={UEFA} comitte_name='UEFA' comitte_route='UEFA' bg={false} active={lastPathSegment === 'UEFA'} />
+                    <NavbarButton comitte_logo={Bilderberg} comitte_name='Bilderberg' comitte_route='Bilderberg' active={lastPathSegment === 'Bilderberg'} bg={true}/>
+                    <NavbarButton comitte_logo={Prensa} comitte_name='Prensa' comitte_route='Prensa' bg={true} active={lastPathSegment === 'Prensa'} />
+                    <NavbarButton comitte_logo={Protoclo} comitte_name='Protocolo' comitte_route='Protocolo' bg={false} active={lastPathSegment === 'Protocolo'} />
                 </div>
                 <div className='navbar_switch'>
                     <button className={'navbar_switch_button ' + ((!snack) ? ' navbar_switch_button_selected' : " ")} onClick={() => setSnack(false)}>
-                        <Link to="/" >Datos</Link>
+                        <Link to="/DB" >Datos</Link>
                     </button>
                     <button className={'navbar_switch_button ' + ((snack) ? ' navbar_switch_button_selected' : " ")} onClick={() => setSnack(true)}>
                         <Link to="/Refrigerios" >Refrigerios</Link>
@@ -37,15 +49,17 @@ export const Navbar = () => {
 
 type NavbarButtonProps ={
     comitte_logo: string,
-    comitte_name: string
-    comitte_route: string
+    comitte_name: string,
+    comitte_route: string,
+    bg: boolean,
+    active: boolean
 }
 
-const NavbarButton: React.FC<NavbarButtonProps> = ({comitte_logo, comitte_name, comitte_route}) =>{
+const NavbarButton: React.FC<NavbarButtonProps> = ({comitte_logo, comitte_name, comitte_route, bg, active}) =>{
     return(
-        <button className='navbar_button'>
-            <img src={comitte_logo}/>
-            <Link to={comitte_route} >{comitte_name}</Link>
+        <button className={`navbar_button ${active ? 'navbar_button_active' : ''}`}>
+            <img className={bg ? "navbar_button_bg" : ""} src={comitte_logo}/>
+            <Link to={comitte_route} relative='route'>{comitte_name}</Link>
         </button>
     )
 }

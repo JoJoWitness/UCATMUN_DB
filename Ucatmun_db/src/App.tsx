@@ -1,4 +1,4 @@
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
+import { Navigate, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
 import { UserInfo } from "./routes/UserInfo"
 import { Root } from "./routes/crmRoot"
 import { DatabaseLayouts } from "./components/dbLayouts"
@@ -14,11 +14,16 @@ import { supabase } from "./supabaseClient"
 
 const router = createBrowserRouter(
     createRoutesFromElements(
+      
         <>
             <Route path="/" >
-              <Route element={<Root/>}>
-                <Route  path="/" element={<DatabaseLayouts/>}/>
-                <Route  path="/Refrigerios" element={<SnackLayout/>}/>
+              <Route path="/DB"element={<Root/>}>
+                <Route index element={<Navigate to="IUPsyS" />}/>
+                <Route index path=":Comite" element={<DatabaseLayouts/>}/>
+              </Route>
+              <Route path="/Refrigerios" element={<Root/>}>
+                <Route index element={<Navigate to="IUPsyS" />}/>
+                <Route path=":Comite" element={<SnackLayout/>}/>
               </Route>
               <Route path="Delegado" element={<UserInfo/>} />       
             </Route>

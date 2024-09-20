@@ -44,7 +44,6 @@
     font-weight: 600;
     color: #F4F4F8;
     text-align: center;
-    min-width: 225px;
     padding: 0px 20px;
 
   }
@@ -78,7 +77,6 @@
     font-weight: 400;
     color: #418FDE;
     text-align: center;
-    min-width: 225px;
     padding: 0px 20px;
 
   }
@@ -100,8 +98,57 @@
     font-weight: 400;
     color: #418FDE;
     text-align: center;
-    min-width: 225px;
     padding: 0px 20px;
 
   }
+
+  .user_data_large{
+    min-width: 225px;
+  }
+
+  .user_data_mid{
+    min-width: 175px;
+  }
+
+  .user_data_small{
+    min-width: 125px;
+  }
   
+  .user_data_xlarge{
+    min-width: 275px;
+  }
+
+  .user_invisible{
+    width: 100px;
+  }
+
+  .user_edit_odd{
+    background-color:  #F4F4F8;
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    height: 100%;
+  }
+
+  .user_edit_button{
+    background-color: transparent;
+    border: transparent;
+    height: 100%;
+    display: flex;
+    padding: 0%;
+    align-items: center;
+  }
+
+  .user_edit_button:focus{
+    background-color: transparent;
+    border: transparent;
+    outline: transparent;
+  }
+
+  .user_edit_even{
+    background-color:  #DCEAF9;
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    height: 100%;
+  }
