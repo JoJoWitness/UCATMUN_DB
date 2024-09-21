@@ -17,9 +17,9 @@ const router = createBrowserRouter(
       
         <>
             <Route path="/" >
-              <Route path="/DB"element={<Root/>}>
+              <Route path="/"element={<Root/>}>
                 <Route index element={<Navigate to="IUPsyS" />}/>
-                <Route index path=":Comite" element={<DatabaseLayouts/>}/>
+                <Route path=":Comite" element={<DatabaseLayouts/>}/>
               </Route>
               <Route path="/Refrigerios" element={<Root/>}>
                 <Route index element={<Navigate to="IUPsyS" />}/>

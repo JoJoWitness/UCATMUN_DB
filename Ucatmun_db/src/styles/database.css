@@ -62,7 +62,7 @@
 
   .user_data_odd{
     background-color:  #F4F4F8;
-    height: 40px;
+    min-height: 40px;
     padding: 10px 0;
     display: flex;
     align-items: center;
@@ -83,7 +83,7 @@
 
   .user_data_even{
     background-color:  #DCEAF9;
-    height: 40px;
+    min-height: 40px;
     padding: 10px 0;
     display: flex;
     align-items: center;
@@ -103,19 +103,19 @@
   }
 
   .user_data_large{
-    min-width: 225px;
+    width: 225px;
   }
 
   .user_data_mid{
-    min-width: 175px;
+    width: 175px;
   }
 
   .user_data_small{
-    min-width: 125px;
+    width: 125px;
   }
   
   .user_data_xlarge{
-    min-width: 275px;
+    width: 275px;
   }
 
   .user_invisible{

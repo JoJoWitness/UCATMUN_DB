@@ -25,7 +25,7 @@ export const Navbar = () => {
                 <div className='navbar_container_buttons'>
                     <NavbarButton comitte_logo={Psi} comitte_name='IUPsyS' comitte_route='IUPsyS' bg={false} active={lastPathSegment === 'IUPsyS'}/>
                     <NavbarButton comitte_logo={Oit} comitte_name='OIT' comitte_route='OIT' active={lastPathSegment === 'OIT'}  bg={false}/>
-                    <NavbarButton comitte_logo={Cop16} comitte_name='Cop16' comitte_route='Cop16' active={lastPathSegment === 'Cop16'}  bg={false}/>
+                    <NavbarButton comitte_logo={Cop16} comitte_name='Cop16' comitte_route='COP16' active={lastPathSegment === 'COP16'}  bg={false}/>
                     <NavbarButton comitte_logo={Onu} comitte_name='GEGNU' comitte_route='GEGNU'bg={true} active={lastPathSegment === 'GEGNU'}/>
                     <NavbarButton comitte_logo={caef_omc} comitte_name='CAEF-OMC' comitte_route='CAEF-OMC'bg={true} active={lastPathSegment === 'CAEF-OMC'}/>
                     <NavbarButton comitte_logo={UEFA} comitte_name='UEFA' comitte_route='UEFA' bg={false} active={lastPathSegment === 'UEFA'} />
@@ -35,7 +35,7 @@ export const Navbar = () => {
                 </div>
                 <div className='navbar_switch'>
                     <button className={'navbar_switch_button ' + ((!snack) ? ' navbar_switch_button_selected' : " ")} onClick={() => setSnack(false)}>
-                        <Link to="/DB" >Datos</Link>
+                        <Link to="/" >Datos</Link>
                     </button>
                     <button className={'navbar_switch_button ' + ((snack) ? ' navbar_switch_button_selected' : " ")} onClick={() => setSnack(true)}>
                         <Link to="/Refrigerios" >Refrigerios</Link>
