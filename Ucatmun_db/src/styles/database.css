@@ -152,3 +152,25 @@
     width: 100px;
     height: 100%;
   }
+
+  .user_data_odd >input, .user_data_even >input{
+
+    border: transparent;
+    background-color: #96C0ED;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #F4F4F8;
+    border-radius: 15px;
+    padding: 10px 2px;
+    
+  }
+
+  input:focus{
+    outline: none;
+  }
+
+  input::-webkit-inner-spin-button, input::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+  }

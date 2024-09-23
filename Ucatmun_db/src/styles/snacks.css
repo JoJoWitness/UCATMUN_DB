@@ -31,15 +31,34 @@
   flex-direction: column;
   align-items: center;
   width: 250px;
-  height: 350px;
+  height: 420px;
   border-radius: 15px;
   padding: 20px 10px;
 }
 
 .snacks_flag{
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 20px;
+}
+
+.snack_counter_controls{
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.snack_counter_controls > button{
+  width: 35px;
+  height: 35px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 700;
+  font-size: 24px;
+  background-color: #5199E1;
 }

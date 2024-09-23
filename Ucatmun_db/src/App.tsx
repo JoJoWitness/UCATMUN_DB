@@ -63,6 +63,7 @@ export default function App() {
     })
 
     if (error) {
+      console.log(error)
       alert("Hubo un error de auntentificación")
       return
     }
