@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: center;
   background-color: #F4F4F8;
-  height: 100%;
+  height: max-content;
   width: 100%;
 }
 
@@ -23,7 +23,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: auto;
   width: 100%;
 }
 
@@ -40,7 +40,7 @@
 .user_header_band_ph{
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   background-color: #418FDE;
   padding: 20px;
   width: 100%;
@@ -66,11 +66,15 @@
   left: 20px;
   width: 48px;
   height: 48px;
+  object-fit: contain;
+  
 }
 
 .user_header_Img{
   width: 48px;
   height: 48px;
+  object-fit: contain;
+
 }
 .user_header_flag{
   width: 48px;
@@ -110,6 +114,7 @@
   font-weight: 700;
   font-size: 20px;
   color: #5199E1;
+  text-align: center;
 }
 
 .user_info_container{
@@ -117,7 +122,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-y: scroll;
   width: 100%;
   padding-bottom: 24px;
 

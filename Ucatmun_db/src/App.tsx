@@ -3,7 +3,6 @@ import { UserInfo } from "./routes/UserInfo"
 import { Root } from "./routes/crmRoot"
 import { DatabaseLayouts } from "./components/dbLayouts"
 import { SnackLayout } from "./components/snackLayout"
-import { createClient } from '@supabase/supabase-js';
 import { useEffect, useState } from "react"
 import ucatmun from "./assets/ucatmun.png"
 import "./styles/auth.css"
@@ -25,7 +24,7 @@ const router = createBrowserRouter(
                 <Route index element={<Navigate to="IUPsyS" />}/>
                 <Route path=":Comite" element={<SnackLayout/>}/>
               </Route>
-              <Route path="Delegado" element={<UserInfo/>} />       
+              <Route path="/Delegado/:cedula" element={<UserInfo/>} />       
             </Route>
         </>
     )

@@ -63,7 +63,7 @@ export const DatabaseLayouts = () => {
         <div className="database_separator"/>
         <p className="user_data_large">Alergia</p>
         <div className="database_separator"/>
-        <p className="user_data_mid">Numero Rep</p>
+        <p className="user_data_mid">Numero Emer</p>
         <div className="user_upload_invisible"/>
         <div className="user_invisible"/>
       </div>

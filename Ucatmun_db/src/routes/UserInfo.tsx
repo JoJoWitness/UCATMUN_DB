@@ -1,56 +1,227 @@
-import { useState } from 'react'
-import comitte from '../assets/Emblem_of_the_United_Nations.svg'
-import country from '../assets/Flag_of_Denmark.svg.png'
+import { useEffect, useState } from 'react'
 import ucatmun from '../assets/ucatmun.png'
-import user from '../assets/CAM01301.jpg'
-
 import { UserSnackContainer, UserTextContainer } from '../components/userAtoms'
 import "../styles/userInfo.css"
+import { supabase } from '../supabaseClient';
+import Psi from '../assets/IUPsyS.png'
+import Oit from '../assets/ILO.png'
+import Cop16 from '../assets/cop16.png'
+import Onu from '../assets/Emblem_of_the_United_Nations.svg'
+import caef_omc from '../assets/CAEF-OMC.png'
+import UEFA from '../assets/uefa.png'
+import "../styles/navbar.css"
+import Bilderberg from '../assets/Bilderberg.png'
+import Prensa from '../assets/prensa.png'
+import Protoclo from '../assets/protocolo.svg'
 
 export const UserInfo = () =>{
 
-  const [changeHeader, setChangeHeader] = useState(false)
+  const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
+
+  const [delegado, setDelegado] = useState()
+  const [dataFetched, setDataFetched] = useState(false);
+  const [imageDelegate, setImageDelgate] = useState<boolean>(true);
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [countryUrl, setCountryUrl] = useState<string>("");
+  const [nombreOficial, setNombreOficial] = useState<string>("");
+  const [cargo, setCargo] = useState<string>("")
+  const [comite, setComite] = useState<string>("")
+  const [fileExists, setFileExists] = useState<boolean>(false)
+  const [comiteImgUrl, setComiteImgUrl] = useState<string>("")
+
+
+  const comiteImg = {
+    "IUPsyS": Psi,
+    "OIT" : Oit,
+    "COP16" : Cop16,
+    "GEGNU": Onu,
+    "CAEF-OMC": caef_omc,
+    "UEFA": UEFA,
+    "Bilderberg": Bilderberg,
+    "Prensa": Prensa,
+    "Protocolo": Protoclo
+
+  }
+
+
+
+  const fetchDelegado = async () =>{
+    const { data, error } = await supabase
+    .from("ucatmun_delegados")
+    .select()
+    .eq("cedula",lastPathSegment)
+    .single()
+
+    if (error) {
+      console.error("Error fetching tweets:", error);
+    } else {
+      setDelegado(data)
+      setCargo(data?.cargo)
+      setDataFetched(true);
+    }
+    
+  }
+
+  async function fetchImage() {
+    try {
+      const { data: files, error: listError } = await supabase
+        .storage
+        .from('users_image')
+        .list('')
+      if (listError) {
+        console.error("Error listing files:", listError);
+      
+        return;
+      }
+  
+      setFileExists(files.some(file => file.name === `${delegado?.cedula}`));
+  
+      
+        const { data, error } = await supabase
+          .storage
+          .from('users_image')
+          .getPublicUrl(`${delegado?.cedula}`);
+  
+        if (error) {
+          console.error("Error fetching image URL:", error);
+        } else {
+          setImageUrl(data.publicUrl);
+          console.log(data.publicUrl)
+        }
+    } catch (error) {
+      console.error("Error fetching image:", error);
+    }
+  }
+  
+  async function fetchFlag() {
+    const { data, error } = await supabase
+      .storage
+      .from('flags')
+      .getPublicUrl(`${delegado?.representacion}.png`)  
+    if (error) {
+      console.error("Error fetching image:", error);
+    } else {
+      setCountryUrl(data.publicUrl);
+    }
+  }
+
+  async function fetchCountry() {
+    const { data, error } = await supabase
+      .from('ucatmun_paises')
+      .select('nombre_oficial')
+      .eq('nombre', delegado?.representacion)
+      .single()  
+    if (error) {
+      console.error("Error fetching image:", error);
+    } else {
+      setNombreOficial(data.nombre_oficial);
+    }
+  }
+
+  async function fetchComite() {
+    const { data, error } = await supabase
+      .from('ucatmun_comites')
+      .select('comite')
+      .eq('comite_id', delegado?.comite)
+      .single()  
+    if (error) {
+      console.error("Error fetching image:", error);
+    } else {
+      setComite(data.comite);
+    }
+  }
 
  
+
+  
+  useEffect(() => {
+    fetchDelegado();
+
+    return () => {
+    
+      setDelegado(null);
+    };
+  }, [lastPathSegment]);
+
+  useEffect(() => {
+    if (delegado) {
+      fetchImage();
+      fetchCountry();
+      fetchFlag()
+      fetchComite();
+     setComiteImgUrl(comiteImg[delegado?.comite]);
+    }
+  }, [delegado]);
+
+  
+ 
+
   return(
     <div className="user_container">
-      {changeHeader ? <HeaderWithPhoto/>: <HeaderWithoutPhoto/>}
+     
+    {fileExists ?
+      <HeaderWithPhoto
+      comiteImg={comiteImgUrl}
+      nombrePai={nombreOficial}
+      nombreOficial={cargo}
+      imageUrl={imageUrl}
+      countryUrl={countryUrl}
+      nombre_comite={comite}
+    />
+    :
+   
+
+    <HeaderWithoutPhoto
+    comiteImg={comiteImgUrl}
+    nombrePai={nombreOficial}
+    nombreOficial={cargo}
+    imageUrl={countryUrl}
+    nombre_comite={comite}
+  />
+    }
+
+     
       
       <div className='user_info_container'>
         <UserTextContainer
             title={"Nombre"}
-            content={"John Doe"}
-          />
-          <UserTextContainer
-            title={"Institucion"}
-            content={"Universidad Experimental del Tachira"}
+            content={delegado?.nombre}
           />
           <UserTextContainer
             title={"Delegación"}
-            content={"MUNET"}
+            content={delegado?.delegacion}
           />
           <UserTextContainer
             title={"Numero"}
-            content={"0414-1234567"}
+            content={delegado?.telefono}
           />
           <UserTextContainer
             title={"Correo"}
-            content={"JohnDoe@gmail.com"}
+            content={delegado?.correo}
           />
           <UserTextContainer
             title={"Alergias"}
-            content={"No"}
+            content={delegado?.alergias}
           />
 
+          {delegado?.numero_rep ? 
+            <UserTextContainer 
+              title={"Numero de emergencia"} 
+              content={delegado?.numero_rep}/>
+            : null
+            }
+
+
+
           <UserSnackContainer
-            snacks={[true, true, false]}
+            snacks={delegado?.refrigerios}
             />
+
+          
+
 
           <img src={ucatmun} style={{width: "84px", marginTop: "36px"}}/>
       
-          <button className='buttonToggler' onClick={() => setChangeHeader(!changeHeader)}>
-            Cambiar Cabezera
-          </button>
       </div>
      
 
@@ -58,44 +229,69 @@ export const UserInfo = () =>{
   )
 }
 
-const HeaderWithoutPhoto = () => {
-  const header = "Asamblea General"
-  const originalCountryName = "Kongeriget Danmark"
-  const cuntryName = "Reino de Dinamarca"
+type HeaderWithoutPhotoProps = {
+  nombre_comite: string;
+  comiteImg: string;
+  imageUrl: string;
+  nombreOficial: string;
+  nombrePai: string;
+}
 
+const HeaderWithoutPhoto = ({comiteImg,nombre_comite, imageUrl, nombreOficial, nombrePai}: HeaderWithoutPhotoProps) => {
+
+  let nombrePais = nombrePai
+
+  if (nombrePai =="Espana") {
+    nombrePais = "España"
+  } else if (nombrePai == "Japon"){
+    nombrePais = "Japón"
+  }
 
   return(
     <div className="user_header">
         <div className="user_header_band">
-          <img className='user_header_comitte' src={comitte}/>
-          <h1>{header}</h1>
+          <img className='user_header_comitte' src={comiteImg}/>
+          <h1>{nombre_comite}</h1>
         </div>
         <div className='user_header_countryInfo'>
-          <img src={country}/>
-          <p>{originalCountryName}</p>
-          <h2>{cuntryName}</h2>
+          <img src={imageUrl}/>
+          <p>{nombreOficial}</p>
+          <h2>{nombrePais}</h2>
         </div>
       </div>
   )
 }
 
-const HeaderWithPhoto = () => {
-  const header = "Asamblea General"
-  const originalCountryName = "Kongeriget Danmark"
-  const cuntryName = "Reino de Dinamarca"
+type HeaderWithPhotoProps ={
+  nombre_comite: string;
+  comiteImg: string;
+  imageUrl: string ;
+  countryUrl: string ;
+  nombreOficial: string;
+  nombrePai: string;
+}
 
+const HeaderWithPhoto = ({comiteImg, nombre_comite, imageUrl, countryUrl, nombreOficial, nombrePai}: HeaderWithPhotoProps) => {
+  
+  let nombrePais = nombrePai
+
+  if (nombrePai =="Espana") {
+    nombrePais = "España"
+  } else if (nombrePai == "Japon"){
+    nombrePais = "Japón"
+  }
 
   return(
     <div className="user_header">
         <div className="user_header_band_ph">
-          <img className='user_header_Img' src={comitte}/>
-          <h1>{header}</h1>
-          <img className='user_header_flag' src={country}/>
+          <img className='user_header_Img' src={comiteImg}/>
+          <h1>{nombre_comite}</h1>
+          <img className='user_header_flag' src={countryUrl}/>
         </div>
         <div className='user_header_countryInfo'>
-          <img src={user} className='user_photo'/>
-          <p>{originalCountryName}</p>
-          <h2>{cuntryName}</h2>
+          <img src={imageUrl} className='user_photo'/>
+          <p>{nombreOficial}</p>
+          <h2>{nombrePais}</h2>
         </div>
       </div>
   )
