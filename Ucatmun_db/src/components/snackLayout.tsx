@@ -58,13 +58,17 @@ export const SnackLayout = () => {
 interface UserSnackProps {
   flag: string;
   id: number;
-  content: string;
-  snacks: number;
+  nombre: string;
+  representacion: string;
+  refrigerios: number;
 }
 
-const UserSnack = ({flag, id, nombre, refrigerios}: UserSnackProps) =>{
+const UserSnack = ({flag, id, nombre, representacion, refrigerios}: UserSnackProps) =>{
   const [snackCount, setSnackCount] = useState(refrigerios);
   const [idS, setIdS] = useState(id)
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [representacionS, setRepresentacionS] = useState(representacion);
+
   
   function incrementSnackCount(){
     setSnackCount((prevCount: number) => Math.min(prevCount + 1, 6));
@@ -91,13 +95,52 @@ const UserSnack = ({flag, id, nombre, refrigerios}: UserSnackProps) =>{
     }
   }
   
+  async function fetchImage() {
+    const { data, error } = await supabase
+      .storage
+      .from('flags')
+      .getPublicUrl(`${representacion}.png`)  
+    if (error) {
+      console.error("Error fetching image:", error);
+    } else {
+      setImageUrl(data.publicUrl);;
+    }
+  }
+ 
+//  async function fetchImage() {
+//     const extensions = ['png', 'svg', 'webp', 'jpg', 'jpeg'];
+//     for (let i = 0; i < extensions.length -1 ; i++) {
+//       const { data, error } = supabase
+//         .storage
+//         .from('flags') 
+//         .getPublicUrl(`${representacionS}.${extensions[i]}`);
+
+//       if (!error && data.publicUrl) {
+//         setImageUrl( data.publicUrl);
+//         console.log("User image fetched successfully:", error);
+//         console.log("User image fetched successfully:", data.publicUrl);
+//         break;
+//       }
+//     }
+//   }
+  
+
+
   useEffect(() => {
     handleSave();
   }, [snackCount]);
 
+ useEffect(() => {
+  fetchImage();
+  console.log(representacionS)
+ }, [representacionS]); 
+
   return(
     <div className="snacks_user_container">
-      <img className="snacks_flag" src={flag} alt="flag" />
+      <div className="snacks_flag_container">
+        <img className="snacks_flag" src={imageUrl ?? ''} alt="flag" />
+      </div>
+     
       <UserTextContainer 
         title="Nombre"
         content={nombre}

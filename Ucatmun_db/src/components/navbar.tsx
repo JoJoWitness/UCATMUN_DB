@@ -11,11 +11,22 @@ import Bilderberg from '../assets/Bilderberg.png'
 import Prensa from '../assets/prensa.png'
 import Protoclo from '../assets/protocolo.svg'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Navbar = () => {
     const location = useLocation();
     const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+  
+    
+    useEffect(() => {
+
+        if(pathSegments[0] == 'Refrigerios'){
+            setSnack(true)
+        }else{
+            setSnack(false)
+        }
+    }, [pathSegments]);
 
     const [snack, setSnack] = useState(false)
  
@@ -34,10 +45,10 @@ export const Navbar = () => {
                     <NavbarButton comitte_logo={Protoclo} comitte_name='Protocolo' comitte_route='Protocolo' bg={false} active={lastPathSegment === 'Protocolo'} />
                 </div>
                 <div className='navbar_switch'>
-                    <button className={'navbar_switch_button ' + ((!snack) ? ' navbar_switch_button_selected' : " ")} onClick={() => setSnack(false)}>
+                    <button className={'navbar_switch_button ' + ((!snack) ? ' navbar_switch_button_selected' : " ")} >
                         <Link to="/" >Datos</Link>
                     </button>
-                    <button className={'navbar_switch_button ' + ((snack) ? ' navbar_switch_button_selected' : " ")} onClick={() => setSnack(true)}>
+                    <button className={'navbar_switch_button ' + ((snack) ? ' navbar_switch_button_selected' : " ")} >
                         <Link to="/Refrigerios" >Refrigerios</Link>
                     </button>
                 </div>

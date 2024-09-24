@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "../styles/database.css" 
 import check from "../assets/save.svg"
 import edit from "../assets/edit.svg"
 import { supabase } from "../supabaseClient"
 import { useLocation } from "react-router-dom"
+import Upload from "../assets/upload.svg"
 
 export const DatabaseLayouts = () => {
 
@@ -12,19 +13,7 @@ export const DatabaseLayouts = () => {
   const [dataFetched, setDataFetched] = useState(false);
   const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
 
-  const userData = 
-    {
-      representacion: "Dinamarca",
-      name: "John Doe",
-      cargo: "Delegado",
-      id: "123456789",
-      edad: 20,
-      correo: "johnDoe@gmail.com",
-      telefono: "0414-1234567",
-      delegacion: "MUNET",
-      alergias: "Ninguna",
-      numero_rep: ""
-    }
+
 
     const fetchAllDelegados = async () =>{
       const { data: delegados, error } = await supabase
@@ -51,7 +40,6 @@ export const DatabaseLayouts = () => {
       };
     }, [lastPathSegment]);
 
-    console.log('aqui')
 
 
   return (
@@ -76,6 +64,7 @@ export const DatabaseLayouts = () => {
         <p className="user_data_large">Alergia</p>
         <div className="database_separator"/>
         <p className="user_data_mid">Numero Rep</p>
+        <div className="user_upload_invisible"/>
         <div className="user_invisible"/>
       </div>
       {allDelegados.map((delegado, index) => (
@@ -117,11 +106,41 @@ const UserDataOdd: React.FC<UserDataProps> =  (props) => {
   const [delegacion, setDelegacion] = useState(props.delegacion);
   const [alergias, setAlergias] = useState(props.alergias);
   const [numeroRep, setNumeroRep] = useState(props.numero_rep);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [userImg, setUserImg] = useState<File>();
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setUserImg(file);
+    
+    }
+  };
+
+  async function uploadFile() {
+    if(userImg){
+      const { data, error } = await supabase
+        .storage
+        .from('users_image')
+        .upload(`${cedula}`,  userImg,{
+        upsert: true,
+        
+      })
+      if (error) {
+        console.error("Error updating user image:", error);
+      } 
+    }
+  }
 
 
   async function handleSave(){
    
     setIsEditing(!isEditing)
+
+    if (userImg) {
+      uploadFile();
+    }
+
  
     const { data, error } = await supabase
       .from("ucatmun_delegados")
@@ -168,6 +187,16 @@ const UserDataOdd: React.FC<UserDataProps> =  (props) => {
           <input className="user_data_large" value={alergias} onChange={(e) => setAlergias(e.target.value)} />
           <div className="database_separator"/>
           <input className="user_data_mid" value={numeroRep} onChange={(e) => setNumeroRep(e.target.value)} />
+          <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+              />
+          <div className="user_upload_invisible">
+            <img src={Upload} onClick={() => fileInputRef.current?.click()}/>
+            <p>{userImg?.name}</p>
+          </div>
         </>
       ) : (
         <>
@@ -186,6 +215,7 @@ const UserDataOdd: React.FC<UserDataProps> =  (props) => {
           <p className="user_data_large">{alergias}</p>
           <div className="database_separator"/>
           <p className="user_data_mid">{numeroRep}</p>
+          <div className="user_upload_invisible"/>
         </>
       )}
       <div className="user_edit_odd">
@@ -216,12 +246,41 @@ const UserDataEven: React.FC<UserDataProps> = (props) => {
   const [delegacion, setDelegacion] = useState(props.delegacion);
   const [alergias, setAlergias] = useState(props.alergias);
   const [numeroRep, setNumeroRep] = useState(props.numero_rep);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [userImg, setUserImg] = useState<File>();
 
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setUserImg(file);
+    
+    }
+  };
+
+  async function uploadFile() {
+    if(userImg){
+      const { data, error } = await supabase
+        .storage
+        .from('users_image')
+        .upload(`${cedula}`,  userImg,{
+        upsert: true,
+        
+      })
+      if (error) {
+        console.error("Error updating user image:", error);
+      } 
+    }
+  }
 
   async function handleSave() {
    
     setIsEditing(!isEditing)
- 
+    
+    if (userImg) {
+      uploadFile();
+    }
+
+
     const { data, error } = await supabase
       .from("ucatmun_delegados")
       .update({ 
@@ -239,7 +298,7 @@ const UserDataEven: React.FC<UserDataProps> = (props) => {
       console.error("Error updating profile:", error);
     } else {
       console.log("Profile updated successfully:", data);
-      // setUserImgUrl(imageUrl);
+    
     
     }
   }
@@ -268,6 +327,18 @@ const UserDataEven: React.FC<UserDataProps> = (props) => {
           <input className="user_data_large" value={alergias} onChange={(e) => setAlergias(e.target.value)} />
           <div className="database_separator_even"/>
           <input className="user_data_mid" value={numeroRep} onChange={(e) => setNumeroRep(e.target.value)} />
+          <div className="database_separator_even"/>
+          <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+              />
+          <div className="user_upload_invisible">
+            <img src={Upload} onClick={() => fileInputRef.current?.click()}/>
+            <p>{userImg?.name}</p>
+          </div>
+         
         </>
       ) : (
         <>
@@ -286,6 +357,7 @@ const UserDataEven: React.FC<UserDataProps> = (props) => {
           <p className="user_data_large">{alergias}</p>
           <div className="database_separator_even"/>
           <p className="user_data_mid">{numeroRep}</p>
+          <div className="user_upload_invisible"/>
         </>
       )}
 
