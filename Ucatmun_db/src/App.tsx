@@ -1,5 +1,4 @@
 import { Navigate, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
-import { UserInfo } from "./routes/UserInfo"
 import { Root } from "./routes/crmRoot"
 import { DatabaseLayouts } from "./components/dbLayouts"
 import { SnackLayout } from "./components/snackLayout"
