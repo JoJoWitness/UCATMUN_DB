@@ -4,7 +4,7 @@ import check from "../assets/save.svg"
 import edit from "../assets/edit.svg"
 import { supabase } from "../supabaseClient"
 import { useLocation } from "react-router-dom"
-import Upload from "../assets/upload.svg"
+import Upload from "../assets/Upload.svg"
 
 export const DatabaseLayouts = () => {
 
