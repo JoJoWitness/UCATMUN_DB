@@ -1,4 +1,5 @@
 import { Navigate, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
+import { UserInfo } from "./routes/UserInfo"
 import { Root } from "./routes/crmRoot"
 import { DatabaseLayouts } from "./components/dbLayouts"
 import { SnackLayout } from "./components/snackLayout"
@@ -23,7 +24,7 @@ const router = createBrowserRouter(
                 <Route index element={<Navigate to="IUPsyS" />}/>
                 <Route path=":Comite" element={<SnackLayout/>}/>
               </Route>
-              {/* <Route path="/Delegado/:cedula" element={<UserInfo/>} />        */}
+              <Route path="/Delegado/:cedula" element={<UserInfo/>} />       
             </Route>
         </>
     )
@@ -55,7 +56,7 @@ export default function App() {
   }, [])
 
   async function signInWithEmail() {
-    const {error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: user,
       password: password,
     })
