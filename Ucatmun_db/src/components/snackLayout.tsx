@@ -7,9 +7,9 @@ import { useLocation } from "react-router-dom";
 
 export const SnackLayout = () => {
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [allDelegados, setAllDelegado] = useState<any[]>([]);
   const location = useLocation();
-  const [dataFetched, setDataFetched] = useState(false);
   const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
 
 
@@ -27,7 +27,6 @@ export const SnackLayout = () => {
         console.error("Error fetching tweets:", error);
       } else {
         setAllDelegado(delegados)
-        setDataFetched(true);
       }
       
     }
@@ -56,18 +55,17 @@ export const SnackLayout = () => {
 }
 
 interface UserSnackProps {
-  flag: string;
   id: number;
   nombre: string;
   representacion: string;
   refrigerios: number;
 }
 
-const UserSnack = ({flag, id, nombre, representacion, refrigerios}: UserSnackProps) =>{
+const UserSnack = ({ id, nombre, representacion, refrigerios}: UserSnackProps) =>{
   const [snackCount, setSnackCount] = useState(refrigerios);
-  const [idS, setIdS] = useState(id)
+  const [idS] = useState(id)
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [representacionS, setRepresentacionS] = useState(representacion);
+  const [representacionS] = useState(representacion);
 
   
   function incrementSnackCount(){
@@ -96,12 +94,12 @@ const UserSnack = ({flag, id, nombre, representacion, refrigerios}: UserSnackPro
   }
   
   async function fetchImage() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .storage
       .from('flags')
       .getPublicUrl(`${representacion}.png`)  
-    if (error) {
-      console.error("Error fetching image:", error);
+    if (!data) {
+      console.error("Error fetching image");
     } else {
       setImageUrl(data.publicUrl);;
     }

@@ -8,9 +8,10 @@ import Upload from "../assets/upload.svg"
 
 export const DatabaseLayouts = () => {
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [allDelegados, setAllDelegado] = useState<any[]>([]);
   const location = useLocation();
-  const [dataFetched, setDataFetched] = useState(false);
+
   const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
 
 
@@ -26,7 +27,6 @@ export const DatabaseLayouts = () => {
         console.error("Error fetching tweets:", error);
       } else {
         setAllDelegado(delegados)
-        setDataFetched(true);
       }
       
     }
@@ -95,10 +95,10 @@ interface UserDataProps {
 
 const UserDataOdd: React.FC<UserDataProps> =  (props) => {
   const [isEditing, setIsEditing] = useState(false)
-  const [id, setId] = useState(props.id)
-  const [representacion, setRepresentacion] = useState(props.representacion);
+  const [id] = useState(props.id)
+  const [representacion] = useState(props.representacion);
   const [nombre, setNombre] = useState(props.nombre);
-  const [cargo, setCargo] = useState(props.cargo);
+  const [cargo] = useState(props.cargo);
   const [cedula, setCedula] = useState(props.cedula);
   const [edad, setEdad] = useState(props.edad);
   const [correo, setCorreo] = useState(props.correo);
@@ -119,7 +119,7 @@ const UserDataOdd: React.FC<UserDataProps> =  (props) => {
 
   async function uploadFile() {
     if(userImg){
-      const { data, error } = await supabase
+      const { error } = await supabase
         .storage
         .from('users_image')
         .upload(`${cedula}`,  userImg,{
@@ -235,10 +235,10 @@ const UserDataOdd: React.FC<UserDataProps> =  (props) => {
 }
 const UserDataEven: React.FC<UserDataProps> = (props) => {
   const [isEditing, setIsEditing] = useState(false)
-  const [id, setId] = useState(props.id)
-  const [representacion, setRepresentacion] = useState(props.representacion);
+  const [id] = useState(props.id)
+  const [representacion] = useState(props.representacion);
   const [nombre, setNombre] = useState(props.nombre);
-  const [cargo, setCargo] = useState(props.cargo);
+  const [cargo] = useState(props.cargo);
   const [cedula, setCedula] = useState(props.cedula);
   const [edad, setEdad] = useState(props.edad);
   const [correo, setCorreo] = useState(props.correo);
@@ -259,7 +259,7 @@ const UserDataEven: React.FC<UserDataProps> = (props) => {
 
   async function uploadFile() {
     if(userImg){
-      const { data, error } = await supabase
+      const { error } = await supabase
         .storage
         .from('users_image')
         .upload(`${cedula}`,  userImg,{

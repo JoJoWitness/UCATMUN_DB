@@ -56,7 +56,7 @@ export default function App() {
   }, [])
 
   async function signInWithEmail() {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const {error } = await supabase.auth.signInWithPassword({
       email: user,
       password: password,
     })

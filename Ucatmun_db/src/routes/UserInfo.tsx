@@ -18,9 +18,21 @@ export const UserInfo = () =>{
 
   const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
 
-  const [delegado, setDelegado] = useState()
-  const [dataFetched, setDataFetched] = useState(false);
-  const [imageDelegate, setImageDelgate] = useState<boolean>(true);
+  interface Delegado {
+    cedula: string;
+    cargo: string;
+    representacion: string;
+    comite: string;
+    nombre: string;
+    delegacion: string;
+    telefono: string;
+    correo: string;
+    alergias: string;
+    numero_rep?: string;
+    refrigerios: number;
+  }
+
+  const [delegado, setDelegado] = useState<Delegado | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [countryUrl, setCountryUrl] = useState<string>("");
   const [nombreOficial, setNombreOficial] = useState<string>("");
@@ -57,7 +69,6 @@ export const UserInfo = () =>{
     } else {
       setDelegado(data)
       setCargo(data?.cargo)
-      setDataFetched(true);
     }
     
   }
@@ -77,13 +88,13 @@ export const UserInfo = () =>{
       setFileExists(files.some(file => file.name === `${delegado?.cedula}`));
   
       
-        const { data, error } = await supabase
+        const { data } = await supabase
           .storage
           .from('users_image')
           .getPublicUrl(`${delegado?.cedula}`);
   
-        if (error) {
-          console.error("Error fetching image URL:", error);
+        if (!data) {
+          console.error("Error fetching image URL");
         } else {
           setImageUrl(data.publicUrl);
           console.log(data.publicUrl)
@@ -94,12 +105,12 @@ export const UserInfo = () =>{
   }
   
   async function fetchFlag() {
-    const { data, error } = await supabase
+    const { data} = await supabase
       .storage
       .from('flags')
       .getPublicUrl(`${delegado?.representacion}.png`)  
-    if (error) {
-      console.error("Error fetching image:", error);
+    if (!data) {
+      console.error("Error fetching image");
     } else {
       setCountryUrl(data.publicUrl);
     }

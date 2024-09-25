@@ -3,13 +3,13 @@ import food_lit from '../assets/lunch_lit.svg'
 
 
 type UserTextContainerProps = {
-  title: string;
-  content: string;
+  title: string | undefined;
+  content: string | undefined;
 
 };
 
 type UserSnackContainerProps ={
-  snacks: number
+  snacks: number | undefined;
 }
 
 export const UserTextContainer: React.FC<UserTextContainerProps> = ({ title, content }) => {
