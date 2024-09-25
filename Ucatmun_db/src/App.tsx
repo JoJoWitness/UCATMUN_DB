@@ -24,7 +24,7 @@ const router = createBrowserRouter(
                 <Route index element={<Navigate to="IUPsyS" />}/>
                 <Route path=":Comite" element={<SnackLayout/>}/>
               </Route>
-              <Route path="/Delegado/:cedula" element={<UserInfo/>} />       
+              {/* <Route path="/Delegado/:cedula" element={<UserInfo/>} />        */}
             </Route>
         </>
     )

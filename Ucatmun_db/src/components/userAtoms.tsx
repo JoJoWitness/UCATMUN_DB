@@ -29,7 +29,7 @@ export const UserSnackContainer:  React.FC<UserSnackContainerProps> = ({snacks }
   
   const staticSnacks = Array(6).fill(false);
  
-  for (let i = 0; i < snacks && i < 6; i++) {
+  for (let i = 0; i < (snacks ?? 0) && i < 6; i++) {
     staticSnacks[i] = true;
   }
 
