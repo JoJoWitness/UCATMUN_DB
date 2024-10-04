@@ -7,6 +7,8 @@ import { useEffect, useState } from "react"
 import ucatmun from "./assets/ucatmun.png"
 import "./styles/auth.css"
 import { supabase } from "./supabaseClient"
+import { useViewport } from "./hooks/customHooks"
+
 
 
 
@@ -15,6 +17,7 @@ const router = createBrowserRouter(
     createRoutesFromElements(
       
         <>
+      
             <Route path="/" >
               <Route path="/"element={<Root/>}>
                 <Route index element={<Navigate to="IUPsyS" />}/>
@@ -26,11 +29,36 @@ const router = createBrowserRouter(
               </Route>
               <Route path="/Delegado/:cedula" element={<UserInfo/>} />       
             </Route>
-        </>
-    )
+            </>
+)
 )
 
+const routerMobile = createBrowserRouter(
+  createRoutesFromElements(
+    
+      <>
+    
+          <Route path="/" >
+            <Route path="/"element={<Root/>}>
+              <Route index element={<Navigate to="/Refrigerios" />}/>
+              <Route path=":Comite" element={<DatabaseLayouts/>}/>
+            </Route>
+            <Route path="/Refrigerios" element={<Root/>}>
+              <Route index element={<Navigate to="IUPsyS" />}/>
+              <Route path=":Comite" element={<SnackLayout/>}/>
+            </Route>
+            <Route path="/Delegado/:cedula" element={<UserInfo/>} />       
+          </Route>
+          </>
+)
+)
+
+
+
 export default function App() {
+
+const { width } = useViewport();
+const breakpoint = 620;
 
   const [session, setSession] = useState(null)
   const [user, setUser] = useState("")
@@ -70,8 +98,8 @@ export default function App() {
 
   if(!session){
       return ( 
-      <div className="auth_mainContainer">
-         <div className="auth_container">
+      <div className={width > breakpoint ? "auth_mainContainer" : "auth_mainContainer_mobile"}>
+         <div className={width > breakpoint ? "auth_container" : "auth_container_mobile"}>
             <img src={ucatmun} alt="ucatmun"/>
             <div className="auth_inputContainer">
               <h3>Correo</h3>
@@ -97,6 +125,6 @@ export default function App() {
   }
   else{
 
-    return <RouterProvider router={router} />
+    return <RouterProvider router={(width > breakpoint) ? router : routerMobile} />
   }
 }

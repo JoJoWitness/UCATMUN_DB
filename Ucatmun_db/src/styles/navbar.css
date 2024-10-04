@@ -12,6 +12,20 @@
   position: relative;
 }
 
+.navbar_mobile{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #5199E1;
+  padding-top: 25px;
+  min-width: 300px;
+  gap: 25px;
+  position: relative;
+}
+
 .logo_container{
   width: 100px;
   height: 100px;
@@ -137,3 +151,6 @@
   border: 2px solid  #F4F4F8;
 }
 
+.filter{
+  filter: invert(99%) sepia(1%) saturate(2135%) hue-rotate(189deg) brightness(97%) contrast(101%);
+}

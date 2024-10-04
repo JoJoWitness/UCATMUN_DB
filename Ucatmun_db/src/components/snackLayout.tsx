@@ -4,15 +4,16 @@ import { UserSnackContainer, UserTextContainer } from "./userAtoms";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { useLocation } from "react-router-dom";
+import { useViewport } from "../hooks/customHooks";
 
 export const SnackLayout = () => {
+  
+  
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [allDelegados, setAllDelegado] = useState<any[]>([]);
   const location = useLocation();
   const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
-
-
 
     const fetchAllDelegados = async () =>{
       const { data: delegados, error } = await supabase
@@ -67,7 +68,11 @@ const UserSnack = ({ id, nombre, representacion, refrigerios}: UserSnackProps) =
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [representacionS] = useState(representacion);
 
-  
+  const { width } = useViewport();
+  const breakpoint = 620;
+
+
+
   function incrementSnackCount(){
     setSnackCount((prevCount: number) => Math.min(prevCount + 1, 6));
     
@@ -105,23 +110,7 @@ const UserSnack = ({ id, nombre, representacion, refrigerios}: UserSnackProps) =
     }
   }
  
-//  async function fetchImage() {
-//     const extensions = ['png', 'svg', 'webp', 'jpg', 'jpeg'];
-//     for (let i = 0; i < extensions.length -1 ; i++) {
-//       const { data, error } = supabase
-//         .storage
-//         .from('flags') 
-//         .getPublicUrl(`${representacionS}.${extensions[i]}`);
 
-//       if (!error && data.publicUrl) {
-//         setImageUrl( data.publicUrl);
-//         console.log("User image fetched successfully:", error);
-//         console.log("User image fetched successfully:", data.publicUrl);
-//         break;
-//       }
-//     }
-//   }
-  
 
 
   useEffect(() => {
@@ -133,6 +122,8 @@ const UserSnack = ({ id, nombre, representacion, refrigerios}: UserSnackProps) =
   console.log(representacionS)
  }, [representacionS]); 
 
+
+ if(width > breakpoint){
   return(
     <div className="snacks_user_container">
       <div className="snacks_flag_container">
@@ -152,4 +143,27 @@ const UserSnack = ({ id, nombre, representacion, refrigerios}: UserSnackProps) =
       </div>
     </div>
   )
+}
+else{
+  return(
+    <div className="snacks_user_container_mobile">
+      <div className="snacks_flag_container_mobile">
+        <img className="snacks_flag_mobile" src={imageUrl ?? ''} alt="flag" />
+     
+        <div className="snacks_p_mobile">
+          <p className="m-0">
+           {nombre}
+          </p>
+        </div>
+      </div>
+      <UserSnackContainer
+        snacks={snackCount}/>
+
+      <div className="snack_counter_controls">
+        <button onClick={() => decrementSnackCount()}>-</button>
+        <button onClick={() => incrementSnackCount()}>+</button>
+      </div>
+    </div>
+  )
+}
 }

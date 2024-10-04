@@ -6,6 +6,12 @@
   position: relative;
 }
 
+@media (max-width: 620px) {
+  #root {
+    flex-direction: column;
+  }
+}
+
 
 
 .user_container {
@@ -174,6 +180,19 @@
   margin: 0px;
 }
 
+.user_snack_container_mobile{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  gap: 5px;
+}
+
+.user_snack_container_mobile > h3{
+  display: none;
+}
+
 .user_snack_img{
   display: flex;
   flex-wrap: wrap;
@@ -183,6 +202,16 @@
 
 .user_snack_img > img{
   width: 36px;
+}
+
+.user_snack_img_mobile{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+.user_snack_img_mobile > img{
+  width: 32px;
 }
 
 .buttonToggler{
