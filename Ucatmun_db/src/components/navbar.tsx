@@ -12,17 +12,15 @@ import Prensa from '../assets/prensa.png'
 import Protoclo from '../assets/protocolo.svg'
 
 import { useEffect, useState } from 'react';
-import { useViewport } from '../hooks/customHooks';
-import { supabase } from '../supabaseClient';
+
+
 
 export const Navbar = () => {
     const location = useLocation();
     const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
     const pathSegments = location.pathname.split('/').filter(Boolean);
   
-    const { width } = useViewport();
-    const breakpoint = 620;
-    
+   
     useEffect(() => {
 
         if(pathSegments[0] == 'Refrigerios'){
@@ -85,28 +83,16 @@ const NavbarButton: React.FC<NavbarButtonProps> = ({comitte_logo, comitte_name, 
 export const Navbar_Mobile = () => {
     const location = useLocation();
     const lastPathSegment = location.pathname.split('/').filter(Boolean).pop();
-    const pathSegments = location.pathname.split('/').filter(Boolean);
+    
   
  
-    
-    useEffect(() => {
-
-        if(pathSegments[0] == 'Refrigerios'){
-            setSnack(true)
-        }else{
-            setSnack(false)
-        }
-    }, [pathSegments]);
-
-
-
-    const [snack, setSnack] = useState(false)
+  
  
         return (
             <nav className="navbar navbar_mobile navbar-expand-lg m-0 p-0 p-3">
             <div className="container-fluid">
               <button className="navbar-toggler" style={{border: "none"}} type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon filter"></span>
+                <span className="navbar-toggler-icon "></span>
               </button>
               <div className="collapse navbar-collapse mt-3" id="navbarNav">
                  <div className='navbar_container_buttons'>
