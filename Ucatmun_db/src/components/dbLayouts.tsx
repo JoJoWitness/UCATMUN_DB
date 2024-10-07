@@ -87,7 +87,7 @@ interface UserDataProps {
   nombre: string;
   cargo: string;
   cedula: string;
-  edad: string;
+  edad: number;
   correo: string;
   telefono: string;
   delegacion: string;
@@ -162,7 +162,7 @@ const UserDataOdd: React.FC<UserDataProps> =  (props) => {
     } else {
       setNombre("")
       setCedula("")
-      setEdad("")
+      setEdad(0)
       setCorreo("")
       setDelegacion("")
       setNumeroRep("")
@@ -377,7 +377,7 @@ const UserDataEven: React.FC<UserDataProps> = (props) => {
       console.log("Profile updated successfully:", data);
       setNombre("")
       setCedula("")
-      setEdad("")
+      setEdad(0)
       setCorreo("")
       setDelegacion("")
       setNumeroRep("")
