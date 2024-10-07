@@ -3,7 +3,7 @@ import ucatmun from '../assets/ucatmun.png'
 import { UserSnackContainer, UserTextContainer } from '../components/userAtoms'
 import "../styles/userInfo.css"
 import { supabase } from '../supabaseClient';
-import Psi from '../assets/IUPsyS.png'
+import Psi from '../assets/IUPsySlogo.png'
 import Oit from '../assets/ILO.png'
 import Cop16 from '../assets/cop16.png'
 import Onu from '../assets/Emblem_of_the_United_Nations.svg'
@@ -51,6 +51,7 @@ export const UserInfo = () =>{
     "UEFA": UEFA,
     "Bilderberg": Bilderberg,
     "Prensa": Prensa,
+    "Mesas": ucatmun,
     "Protocolo": Protoclo
 
   }
@@ -257,6 +258,7 @@ const HeaderWithoutPhoto = ({comiteImg,nombre_comite, imageUrl, nombreOficial, n
   } else if (nombrePai == "Japon"){
     nombrePais = "Japón"
   }
+
 
   return(
     <div className="user_header">

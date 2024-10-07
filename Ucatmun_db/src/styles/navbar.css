@@ -27,8 +27,8 @@
 }
 
 .logo_container{
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   background-color: #F4F4F8;
   display: flex;
   border-radius: 50%;
@@ -42,9 +42,25 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  height: auto;
+  max-height: 496px;
   gap: 15px;
+overflow-y: scroll;
  
+}
+
+.navbar_container_buttons::-webkit-scrollbar{
+  background-color: transparent;
+  height: 5px;
+}
+
+.navbar_container_buttons::-webkit-scrollbar-track{
+  background-color: none
+}
+
+.navbar_container_buttons::-webkit-scrollbar-thumb{
+  background-color: #5199E1;
+  height: 20px;
+  width: 20px;
 }
 
 .navbar_button{

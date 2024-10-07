@@ -3,8 +3,9 @@ import "../styles/database.css"
 import check from "../assets/save.svg"
 import edit from "../assets/edit.svg"
 import { supabase } from "../supabaseClient"
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import Upload from "../assets/Upload.svg"
+import trash from "../assets/trash.svg"
 
 export const DatabaseLayouts = () => {
 
@@ -66,6 +67,7 @@ export const DatabaseLayouts = () => {
         <p className="user_data_mid">Numero Emer</p>
         <div className="user_upload_invisible"/>
         <div className="user_invisible"/>
+        <div className="user_invisible"/>
       </div>
       {allDelegados.map((delegado, index) => (
         index % 2 === 0 ? (
@@ -85,7 +87,7 @@ interface UserDataProps {
   nombre: string;
   cargo: string;
   cedula: string;
-  edad: number;
+  edad: string;
   correo: string;
   telefono: string;
   delegacion: string;
@@ -158,6 +160,41 @@ const UserDataOdd: React.FC<UserDataProps> =  (props) => {
     if (error) {
       console.error("Error updating profile:", error);
     } else {
+      setNombre("")
+      setCedula("")
+      setEdad("")
+      setCorreo("")
+      setDelegacion("")
+      setNumeroRep("")
+      setTelefono("")
+      setAlergias("")
+
+      console.log("Profile updated successfully:", data);
+
+    }
+  }
+
+  async function handleDelete(){
+   
+    setIsEditing(!isEditing)
+
+  
+    const { data, error } = await supabase
+      .from("ucatmun_delegados")
+      .update({ 
+        nombre: null,
+        cedula: null,
+        edad: null,
+        correo: null,
+        telefono: null,
+        delegacion: null,
+        alergias: null,
+        numero_rep: null,})
+      .eq("id", id); 
+
+    if (error) {
+      console.error("Error updating profile:", error);
+    } else {
       console.log("Profile updated successfully:", data);
 
     }
@@ -197,10 +234,11 @@ const UserDataOdd: React.FC<UserDataProps> =  (props) => {
             <img src={Upload} onClick={() => fileInputRef.current?.click()}/>
             <p>{userImg?.name}</p>
           </div>
+          
         </>
       ) : (
         <>
-          <p className="user_data_large">{nombre}</p>
+          <Link to={"/Delegado/" + cedula} className="user_data_large">{nombre}</Link>
           <div className="database_separator"/>
           <p className="user_data_mid">{cedula}</p>
           <div className="database_separator"/>
@@ -229,6 +267,18 @@ const UserDataOdd: React.FC<UserDataProps> =  (props) => {
           </button>
         }
       </div>
+      <div className="user_edit_odd">
+        {
+          (isEditing) ? 
+          <button className="user_edit_button" onClick={() => handleDelete()}>
+            <img src={trash}/>
+          </button>
+          :
+          null
+        }
+      </div>
+      
+
      
     </div>
   );
@@ -303,6 +353,40 @@ const UserDataEven: React.FC<UserDataProps> = (props) => {
     }
   }
 
+  async function handleDelete(){
+   
+    setIsEditing(!isEditing)
+
+  
+    const { data, error } = await supabase
+      .from("ucatmun_delegados")
+      .update({ 
+        nombre: null,
+        cedula: null,
+        edad: null,
+        correo: null,
+        telefono: null,
+        delegacion: null,
+        alergias: null,
+        numero_rep: null,})
+      .eq("id", id); 
+
+    if (error) {
+      console.error("Error updating profile:", error);
+    } else {
+      console.log("Profile updated successfully:", data);
+      setNombre("")
+      setCedula("")
+      setEdad("")
+      setCorreo("")
+      setDelegacion("")
+      setNumeroRep("")
+      setTelefono("")
+      setAlergias("")
+
+    }
+  }
+
 
   return (
     <div className="user_data_even">
@@ -342,7 +426,7 @@ const UserDataEven: React.FC<UserDataProps> = (props) => {
         </>
       ) : (
         <>
-           <p className="user_data_large">{nombre}</p>
+          <Link to={"/Delegado/" + cedula} className="user_data_large">{nombre}</Link>
           <div className="database_separator_even"/>
           <p className="user_data_mid">{cedula}</p>
           <div className="database_separator_even"/>
@@ -370,6 +454,16 @@ const UserDataEven: React.FC<UserDataProps> = (props) => {
           <button className="user_edit_button" onClick={() => setIsEditing(!isEditing)}>
             <img src={edit}/>
           </button>
+        }
+      </div>
+      <div className="user_edit_even">
+        {
+          (isEditing) ? 
+          <button className="user_edit_button" onClick={() => handleDelete()}>
+            <img src={trash}/>
+          </button>
+          :
+          null
         }
       </div>
     </div>

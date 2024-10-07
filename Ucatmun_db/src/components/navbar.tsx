@@ -44,6 +44,7 @@ export const Navbar = () => {
                     <NavbarButton comitte_logo={UEFA} comitte_name='UEFA' comitte_route='UEFA' bg={false} active={lastPathSegment === 'UEFA'} />
                     <NavbarButton comitte_logo={Bilderberg} comitte_name='Bilderberg' comitte_route='Bilderberg' active={lastPathSegment === 'Bilderberg'} bg={true}/>
                     <NavbarButton comitte_logo={Prensa} comitte_name='Prensa' comitte_route='Prensa' bg={true} active={lastPathSegment === 'Prensa'} />
+                    <NavbarButton comitte_logo={Ucatmun} comitte_name='Mesas' comitte_route='Mesas' bg={false} active={lastPathSegment === 'Mesas'} />
                     <NavbarButton comitte_logo={Protoclo} comitte_name='Protocolo' comitte_route='Protocolo' bg={false} active={lastPathSegment === 'Protocolo'} />
                 </div>
                 <div className='navbar_switch'>
@@ -104,6 +105,7 @@ export const Navbar_Mobile = () => {
                      <NavbarButton comitte_logo={UEFA} comitte_name='UEFA' comitte_route='UEFA' bg={false} active={lastPathSegment === 'UEFA'} />
                      <NavbarButton comitte_logo={Bilderberg} comitte_name='Bilderberg' comitte_route='Bilderberg' active={lastPathSegment === 'Bilderberg'} bg={true}/>
                      <NavbarButton comitte_logo={Prensa} comitte_name='Prensa' comitte_route='Prensa' bg={true} active={lastPathSegment === 'Prensa'} />
+                     <NavbarButton comitte_logo={Ucatmun} comitte_name='Mesas' comitte_route='Mesas' bg={false} active={lastPathSegment === 'Mesas'} />
                      <NavbarButton comitte_logo={Protoclo} comitte_name='Protocolo' comitte_route='Protocolo' bg={false} active={lastPathSegment === 'Protocolo'} />
                  </div>
               </div>

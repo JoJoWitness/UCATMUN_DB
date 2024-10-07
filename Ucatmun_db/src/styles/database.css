@@ -71,11 +71,11 @@
    
   }
 
-  .user_data_odd >p{
+  .user_data_odd >p, .user_data_odd >a{
     margin: 0%;
     font-size: 14px;
     font-weight: 400;
-    color: #418FDE;
+    color: #418FDE !important;
     text-align: center;
     padding: 0px 20px;
 
@@ -92,11 +92,11 @@
    
   }
 
-  .user_data_even >p{
+  .user_data_even >p, .user_data_even >a{
     margin: 0%;
     font-size: 14px;
     font-weight: 400;
-    color: #418FDE;
+    color: #418FDE !important;
     text-align: center;
     padding: 0px 20px;
 
@@ -194,4 +194,10 @@
   input::-webkit-inner-spin-button, input::-webkit-outer-spin-button{
     -webkit-appearance: none;
     margin: 0;
+  }
+
+  a{
+    text-decoration: none !important;
+
+    font-weight: 400 !important;
   }
